@@ -18,7 +18,7 @@ const QuickBooking = () => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/movies/released"
+          "https://cinema-backend-zeta.vercel.app/api/movies/released"
         );
         setShowingMovies(response.data); // Lưu danh sách phim vào state
       } catch (error) {
@@ -33,7 +33,7 @@ const QuickBooking = () => {
   const fetchShowtimesByMovieId = async (movieId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/showtimes/movie/${movieId}`
+        `https://cinema-backend-zeta.vercel.app/api/showtimes/movie/${movieId}`
       );
 
       // Lấy danh sách các rạp chiếu (cinema)

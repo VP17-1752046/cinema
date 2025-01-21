@@ -43,7 +43,7 @@ const MovieList = () => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/movies/all-movie-pagination`,
+          `https://cinema-backend-zeta.vercel.app/api/movies/all-movie-pagination`,
           {
             params: { page: currentPage },
           }
@@ -63,7 +63,7 @@ const MovieList = () => {
   const handleEditClick = async (movieId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/movie/${movieId}`
+        `https://cinema-backend-zeta.vercel.app/api/movie/${movieId}`
       );
       setSelectedMovie(response.data); // Lấy thông tin phim được chọn
       setIsModalVisible(true); // Hiển thị modal
@@ -111,7 +111,7 @@ const MovieList = () => {
       });
 
       const response = await axios.put(
-        `http://localhost:5000/api/movie/${selectedMovie._id}`,
+        `https://cinema-backend-zeta.vercel.app/api/movie/${selectedMovie._id}`,
         formData,
         {
           headers: {
@@ -155,7 +155,7 @@ const MovieList = () => {
     try {
       // Gọi API DELETE để xóa phim
       await axios.delete(
-        `http://localhost:5000/api/movie/${selectedMovie._id}`
+        `https://cinema-backend-zeta.vercel.app/api/movie/${selectedMovie._id}`
       );
       // Cập nhật danh sách phim trong state
       setMovies((prevMovies) =>
@@ -209,7 +209,7 @@ const MovieList = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/movie/",
+        "https://cinema-backend-zeta.vercel.app/api/movie/",
         formData,
         {
           headers: {

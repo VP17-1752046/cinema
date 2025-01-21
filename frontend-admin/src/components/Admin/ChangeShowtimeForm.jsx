@@ -16,7 +16,7 @@ function ChangeShowtimeForm({ onClose, showtime, onSave, timeSlot }) {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/movies/released"
+          "https://cinema-backend-zeta.vercel.app/api/movies/released"
         );
         setMovies(response.data); // Lưu danh sách phim vào state
       } catch (error) {
@@ -27,80 +27,75 @@ function ChangeShowtimeForm({ onClose, showtime, onSave, timeSlot }) {
     fetchMovies();
   }, []);
 
- // Kiểm tra giờ nhập vào có hợp lệ không so với timeSlot
-const validateTime = (inputTime) => {
-  if (!timeSlot || !timeSlot.start || !timeSlot.end) {
-    return false; // Nếu timeSlot không hợp lệ, trả về false
-  }
+  // Kiểm tra giờ nhập vào có hợp lệ không so với timeSlot
+  const validateTime = (inputTime) => {
+    if (!timeSlot || !timeSlot.start || !timeSlot.end) {
+      return false; // Nếu timeSlot không hợp lệ, trả về false
+    }
 
-  const inputParts = inputTime.split(":").map(Number); // Chuyển giờ nhập vào thành số
-  const inputDate = new Date(2020, 1, 1, inputParts[0], inputParts[1]); // Tạo đối tượng Date cho giờ nhập vào
+    const inputParts = inputTime.split(":").map(Number); // Chuyển giờ nhập vào thành số
+    const inputDate = new Date(2020, 1, 1, inputParts[0], inputParts[1]); // Tạo đối tượng Date cho giờ nhập vào
 
-  const [startHour, startMinute] = timeSlot.start.split(":").map(Number); // Tách giờ và phút từ thời gian bắt đầu
-  const [endHour, endMinute] = timeSlot.end.split(":").map(Number); // Tách giờ và phút từ thời gian kết thúc
+    const [startHour, startMinute] = timeSlot.start.split(":").map(Number); // Tách giờ và phút từ thời gian bắt đầu
+    const [endHour, endMinute] = timeSlot.end.split(":").map(Number); // Tách giờ và phút từ thời gian kết thúc
 
-  const startTime = new Date(2020, 1, 1, startHour, startMinute); // Khung giờ bắt đầu
-  const endTime = new Date(2020, 1, 1, endHour, endMinute); // Khung giờ kết thúc
+    const startTime = new Date(2020, 1, 1, startHour, startMinute); // Khung giờ bắt đầu
+    const endTime = new Date(2020, 1, 1, endHour, endMinute); // Khung giờ kết thúc
 
-  // So sánh giờ nhập vào với khung giờ
-  return inputDate >= startTime && inputDate <= endTime;
-};
-
-// Xử lý khi người dùng thay đổi giờ chiếu
-const handleTimeChange = (e) => {
-  const inputTime = e.target.value;
-  setNewTime(inputTime); // Cập nhật giờ chiếu mới
-
-  const validSlot = validateTime(inputTime); // Kiểm tra giờ chiếu mới có hợp lệ không
-
-  if (validSlot) {
-    setErrorMessage(""); // Xóa lỗi nếu giờ hợp lệ
-  } else {
-    setErrorMessage("Giờ chiếu phải nằm trong các khung giờ đã chọn.");
-  }
-};
-
-  
-
-
-
-const handleSave = async () => {
-  if (!selectedMovieId) {
-    alert("Vui lòng chọn một bộ phim!");
-    return;
-  }
-
-  if (!newTime || errorMessage) {
-    alert("Vui lòng nhập giờ chiếu hợp lệ!");
-    return;
-  }
-
-  const showtimeId = showtime._id; // ID suất chiếu
-  const updatedShowtime = {
-    movie: selectedMovieId, // Gửi ID phim mới
-    times: newTime, // Giờ chiếu mới
+    // So sánh giờ nhập vào với khung giờ
+    return inputDate >= startTime && inputDate <= endTime;
   };
 
-  try {
-    // Gửi yêu cầu PUT đến API
-    await axios.put(
-      `http://localhost:5000/api/showtimes/update-showtime/${showtimeId}`,
-      updatedShowtime
-    );
+  // Xử lý khi người dùng thay đổi giờ chiếu
+  const handleTimeChange = (e) => {
+    const inputTime = e.target.value;
+    setNewTime(inputTime); // Cập nhật giờ chiếu mới
 
-    // Thông báo thành công và gọi hàm onSave
-    alert("Cập nhật lịch chiếu thành công!");
-    onSave({ ...showtime, movie: { _id: selectedMovieId }, times: newTime });
-    onClose();
+    const validSlot = validateTime(inputTime); // Kiểm tra giờ chiếu mới có hợp lệ không
 
-    // Tải lại trang sau khi lưu thành công
-    window.location.reload();
-  } catch (error) {
-    console.error("Lỗi khi cập nhật lịch chiếu:", error);
-    alert("Cập nhật thất bại. Vui lòng thử lại.");
-  }
-};
+    if (validSlot) {
+      setErrorMessage(""); // Xóa lỗi nếu giờ hợp lệ
+    } else {
+      setErrorMessage("Giờ chiếu phải nằm trong các khung giờ đã chọn.");
+    }
+  };
 
+  const handleSave = async () => {
+    if (!selectedMovieId) {
+      alert("Vui lòng chọn một bộ phim!");
+      return;
+    }
+
+    if (!newTime || errorMessage) {
+      alert("Vui lòng nhập giờ chiếu hợp lệ!");
+      return;
+    }
+
+    const showtimeId = showtime._id; // ID suất chiếu
+    const updatedShowtime = {
+      movie: selectedMovieId, // Gửi ID phim mới
+      times: newTime, // Giờ chiếu mới
+    };
+
+    try {
+      // Gửi yêu cầu PUT đến API
+      await axios.put(
+        `https://cinema-backend-zeta.vercel.app/api/showtimes/update-showtime/${showtimeId}`,
+        updatedShowtime
+      );
+
+      // Thông báo thành công và gọi hàm onSave
+      alert("Cập nhật lịch chiếu thành công!");
+      onSave({ ...showtime, movie: { _id: selectedMovieId }, times: newTime });
+      onClose();
+
+      // Tải lại trang sau khi lưu thành công
+      window.location.reload();
+    } catch (error) {
+      console.error("Lỗi khi cập nhật lịch chiếu:", error);
+      alert("Cập nhật thất bại. Vui lòng thử lại.");
+    }
+  };
 
   return (
     <div className="form-container">
@@ -122,19 +117,17 @@ const handleSave = async () => {
 
       {/* TimeSlots (Read-only) */}
       <div className="form-group">
-  <label htmlFor="timeSlot">Khung giờ:</label>
-  <div style={{ marginBottom: '10px' }}>
-    {timeSlot && timeSlot.start && timeSlot.end ? (
-      <div>
-        {timeSlot.start} - {timeSlot.end}
+        <label htmlFor="timeSlot">Khung giờ:</label>
+        <div style={{ marginBottom: "10px" }}>
+          {timeSlot && timeSlot.start && timeSlot.end ? (
+            <div>
+              {timeSlot.start} - {timeSlot.end}
+            </div>
+          ) : (
+            <p>Không có thời gian chiếu nào.</p>
+          )}
+        </div>
       </div>
-    ) : (
-      <p>Không có thời gian chiếu nào.</p>
-    )}
-  </div>
-</div>
-
-
 
       <div className="form-group">
         <label htmlFor="newTime">Giờ chiếu mới:</label>

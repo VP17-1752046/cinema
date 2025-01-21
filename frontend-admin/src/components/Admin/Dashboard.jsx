@@ -109,10 +109,10 @@ const Dashboard = () => {
       try {
         const [moviesRes, usersRes, bookingsRes, cinemasRes] =
           await Promise.all([
-            axios.get("http://localhost:5000/api/movies/"),
-            axios.get("http://localhost:5000/api/users/"),
-            axios.get("http://localhost:5000/api/booking/"),
-            axios.get("http://localhost:5000/api/cinemas/"),
+            axios.get("https://cinema-backend-zeta.vercel.app/api/movies/"),
+            axios.get("https://cinema-backend-zeta.vercel.app/api/users/"),
+            axios.get("https://cinema-backend-zeta.vercel.app/api/booking/"),
+            axios.get("https://cinema-backend-zeta.vercel.app/api/cinemas/"),
           ]);
 
         setMovies(moviesRes.data);

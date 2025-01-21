@@ -44,7 +44,7 @@ function Register({ isOpen, onClose, onLoginClick }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://cinema-backend-zeta.vercel.app/api/users/register",
         {
           fullName: formData.fullName,
           email: formData.email,
@@ -117,7 +117,8 @@ function Register({ isOpen, onClose, onLoginClick }) {
                   required
                 />
               </div>
-              <div><label htmlFor="phone">Số điện thoại</label>
+              <div>
+                <label htmlFor="phone">Số điện thoại</label>
                 <input
                   id="phone"
                   placeholder="Nhập Số điện thoại"
@@ -125,13 +126,18 @@ function Register({ isOpen, onClose, onLoginClick }) {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                /></div>
-
+                />
+              </div>
             </div>
 
             <div className="form-group flex justify-between  ">
-              <div className="flex items-center text-xl"><label className="h-fit mr-4
-              ">Giới tính</label>
+              <div className="flex items-center text-xl">
+                <label
+                  className="h-fit mr-4
+              "
+                >
+                  Giới tính
+                </label>
                 <div className="radio-group">
                   <input
                     id="male"
@@ -153,8 +159,10 @@ function Register({ isOpen, onClose, onLoginClick }) {
                     required
                   />
                   <label htmlFor="female">Nữ</label>
-                </div></div>
-              <div className="flex items-center gap-2"><label htmlFor="dateOfBirth">Ngày sinh</label>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <label htmlFor="dateOfBirth">Ngày sinh</label>
                 <input
                   id="dateOfBirth"
                   className="h-fit border border-[#ccc] p-1"
@@ -163,11 +171,10 @@ function Register({ isOpen, onClose, onLoginClick }) {
                   value={formData.dateOfBirth}
                   onChange={handleChange}
                   required
-                /></div>
+                />
+              </div>
             </div>
-            <div className="form-group">
-
-            </div>
+            <div className="form-group"></div>
             <div className="form-group">
               <label htmlFor="password">Mật khẩu</label>
               <input

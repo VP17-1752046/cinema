@@ -8,8 +8,7 @@ import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 
 import jwtDecode from "jwt-decode";
-import MovieSearch from "./MovieSearch .jsx"
-
+import MovieSearch from "./MovieSearch .jsx";
 
 function Header() {
   const options = ["HCM", "Hà-Nội", "Đà-Nẵng"];
@@ -39,7 +38,7 @@ function Header() {
 
   useEffect(() => {
     // Fetch danh sách phim từ API
-    fetch("http://localhost:5000/api/movies/released")
+    fetch("https://cinema-backend-zeta.vercel.app/api/movies/released")
       .then((response) => response.json())
       .then((data) => setAllMovies(Array.isArray(data) ? data : [])) // Xử lý dữ liệu không hợp lệ
       .catch((error) => {
@@ -90,32 +89,35 @@ function Header() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/movie/top_rating');  // URL API của bạn
-        setShowingM(response.data);  // Lưu danh sách phim vào state
+        const response = await axios.get(
+          "https://cinema-backend-zeta.vercel.app/api/movie/top_rating"
+        ); // URL API của bạn
+        setShowingM(response.data); // Lưu danh sách phim vào state
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error("Error fetching movies:", error);
       }
     };
 
     fetchMovies();
   }, []);
 
-
   useEffect(() => {
     const fetchMovies0 = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/movies/not_released');  // URL API của bạn
-        setUpComingM(response.data);  // Lưu danh sách phim vào state
+        const response = await axios.get(
+          "https://cinema-backend-zeta.vercel.app/api/movies/not_released"
+        ); // URL API của bạn
+        setUpComingM(response.data); // Lưu danh sách phim vào state
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error("Error fetching movies:", error);
       }
     };
 
     fetchMovies0();
   }, []);
   const handleClick = (id) => {
-    navigate(`/DetailMovie/${id}`)
-  }
+    navigate(`/DetailMovie/${id}`);
+  };
   return (
     <div className="flex font-nunito justify-around w-[100%] items-center h-fit border-b-8 border-gray-200 pb-2 pt-2">
       <Link to={"/"} className="w-fit h-20">
@@ -140,15 +142,13 @@ function Header() {
           />
         </div>
 
-
-
         <div className="relative inline-block group">
-          <button className="text-gray-600 text-xl py-2 px-4 rounded-lg">Phim</button>
+          <button className="text-gray-600 text-xl py-2 px-4 rounded-lg">
+            Phim
+          </button>
 
           {/* Dropdown Menu */}
-          <div
-            className="absolute hidden group-hover:block bg-gray-50 shadow-xl rounded-lg py-2 px-3 w-max z-10"
-          >
+          <div className="absolute hidden group-hover:block bg-gray-50 shadow-xl rounded-lg py-2 px-3 w-max z-10">
             <div className="h-fit">
               <p className="border-l-4 pl-2 text-lg border-blue-700 font-normal">
                 Phim Đang Chiếu
@@ -168,7 +168,6 @@ function Header() {
                     />
 
                     {/* Nút "Mua vé" */}
-
 
                     {/* Tên phim */}
                     <p className="text-center mt-2">{movie.title}</p>
@@ -196,10 +195,6 @@ function Header() {
           </div>
         </div>
 
-
-
-
-
         <p className="hover:text-orange-500">
           <Link to={"/"}>Mua vé</Link>
         </p>
@@ -207,20 +202,18 @@ function Header() {
         <a className="hover:text-orange-500 pl-3" href="/Blog-movies">
           Blog Mê phim
         </a>
-
       </div>
       <div>
-        <MovieSearch movies={allMovies} onSearch={(term) => console.log("Tìm kiếm:", term)} />
+        <MovieSearch
+          movies={allMovies}
+          onSearch={(term) => console.log("Tìm kiếm:", term)}
+        />
       </div>
 
       <div className="">
         {loggedInUser ? (
-          <div className="flex gap-3 justify-center items-center " >
-            <Link
-              to="/Profile"
-            >
-              Hello, {getDisplayName()}
-            </Link>
+          <div className="flex gap-3 justify-center items-center ">
+            <Link to="/Profile">Hello, {getDisplayName()}</Link>
             <button onClick={handleLogout} className="">
               Logout
             </button>

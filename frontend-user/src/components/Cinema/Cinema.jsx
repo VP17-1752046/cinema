@@ -70,12 +70,13 @@ function Cinema() {
     // Thêm các phim khác...
   ];
 
-
   useEffect(() => {
     async function fetchData() {
       try {
         const [cinemaResponse, showtimeResponse] = await Promise.all([
-          axios.get(`http://localhost:5000/api/cinemas/${location}`),
+          axios.get(
+            `https://cinema-backend-zeta.vercel.app/api/cinemas/${location}`
+          ),
         ]);
 
         setCinemas(cinemaResponse.data);
@@ -164,7 +165,6 @@ function Cinema() {
 
                 {/* Hiển thị danh sách phim */}
                 <MoviePage cinemaLocation={location} />
-
               </div>
               <div className="grid md:grid-cols-2 grid-cols-1 mt-8  my-0 mx-auto  py-6 (24px px-[16px] bg-white max-w-[1200px] ">
                 <div className="bg-white p-4">

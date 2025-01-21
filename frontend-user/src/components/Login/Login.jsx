@@ -28,7 +28,7 @@ function Login({ isOpen, onClose, onRegisterClick, onLoginSuccess }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://cinema-backend-zeta.vercel.app/api/users/login",
         formData
       );
       const { data } = response;

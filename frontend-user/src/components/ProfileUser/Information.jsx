@@ -48,7 +48,7 @@ const Information = () => {
 
       // Gửi request update tới backend
       const response = await axios.put(
-        "http://localhost:5000/api/users/update",
+        "https://cinema-backend-zeta.vercel.app/api/users/update",
         {
           email: user.email,
           password: user.password, // Chỉ gửi password nếu có thay đổi

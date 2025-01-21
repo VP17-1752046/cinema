@@ -49,7 +49,7 @@ function Screening() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/cinemas")
+      .get("https://cinema-backend-zeta.vercel.app/api/cinemas")
       .then((response) => {
         const transformedData = response.data.map((cinema) => ({
           id: cinema._id,
@@ -69,7 +69,7 @@ function Screening() {
   const fetchShowtimesForCinema = async (cinemaId, cinemaRooms) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/showtimes/cinema/${cinemaId}`
+        `https://cinema-backend-zeta.vercel.app/api/showtimes/cinema/${cinemaId}`
       );
       const allShowtimes = response.data;
 
@@ -269,8 +269,7 @@ function Screening() {
                                     }
                                   </span>
                                 </p>
-                                <a 
-                                
+                                <a
                                   className="btn-room"
                                   onClick={(e) => {
                                     e.preventDefault();

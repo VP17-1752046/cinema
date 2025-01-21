@@ -13,7 +13,9 @@ const Cinema = () => {
   useEffect(() => {
     const fetchCinemas = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/cinemas/");
+        const response = await axios.get(
+          "https://cinema-backend-zeta.vercel.app/api/cinemas/"
+        );
         setCinemas(response.data);
         setIsLoading(false);
       } catch (error) {

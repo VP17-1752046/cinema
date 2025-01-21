@@ -17,7 +17,7 @@ const ForgotPassword = ({ isOpen, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/check-email",
+        "https://cinema-backend-zeta.vercel.app/api/users/check-email",
         { email }
       );
       if (response.data.exists) {
@@ -44,10 +44,13 @@ const ForgotPassword = ({ isOpen, onClose }) => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/users/reset-password", {
-        email,
-        newPassword,
-      });
+      await axios.post(
+        "https://cinema-backend-zeta.vercel.app/api/users/reset-password",
+        {
+          email,
+          newPassword,
+        }
+      );
 
       setModal({
         isOpen: true,

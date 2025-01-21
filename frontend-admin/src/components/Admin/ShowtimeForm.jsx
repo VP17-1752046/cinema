@@ -24,7 +24,7 @@ function ShowtimeForm({
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/movies/released"
+          "https://cinema-backend-zeta.vercel.app/api/movies/released"
         );
         setMovies(response.data); // Lưu danh sách phim vào state
       } catch (error) {
@@ -48,17 +48,15 @@ function ShowtimeForm({
 
   // Kiểm tra xem giờ nhập vào có nằm trong khung giờ hợp lệ không
   const validateTime = (inputTime) => {
-    const selectedSlot = timeSlots.find(
-      (slot) => {
-        const start = slot.start.split(":").map(Number);
-        const end = slot.end.split(":").map(Number);
-        const input = inputTime.split(":").map(Number);
-        const startTime = new Date(2020, 1, 1, start[0], start[1]);
-        const endTime = new Date(2020, 1, 1, end[0], end[1]);
-        const inputTimeObj = new Date(2020, 1, 1, input[0], input[1]);
-        return inputTimeObj >= startTime && inputTimeObj <= endTime;
-      }
-    );
+    const selectedSlot = timeSlots.find((slot) => {
+      const start = slot.start.split(":").map(Number);
+      const end = slot.end.split(":").map(Number);
+      const input = inputTime.split(":").map(Number);
+      const startTime = new Date(2020, 1, 1, start[0], start[1]);
+      const endTime = new Date(2020, 1, 1, end[0], end[1]);
+      const inputTimeObj = new Date(2020, 1, 1, input[0], input[1]);
+      return inputTimeObj >= startTime && inputTimeObj <= endTime;
+    });
     return selectedSlot;
   };
 
@@ -95,7 +93,10 @@ function ShowtimeForm({
 
     // Gọi API để tạo lịch chiếu
     axios
-      .post("http://localhost:5000/api/showtimes", showtimeData)
+      .post(
+        "https://cinema-backend-zeta.vercel.app/api/showtimes",
+        showtimeData
+      )
       .then((response) => {
         console.log("Showtime created:", response.data);
         alert("Lịch chiếu đã được lưu thành công!"); // Hiển thị thông báo thành công

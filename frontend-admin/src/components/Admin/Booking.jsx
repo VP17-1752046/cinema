@@ -25,7 +25,7 @@ const Booking = () => {
     const fetchFilterOptions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/booking/filter-options"
+          "https://cinema-backend-zeta.vercel.app/api/booking/filter-options"
         );
         setMovieOptions(response.data.movies);
         setCinemaOptions(response.data.cinemas);
@@ -50,7 +50,7 @@ const Booking = () => {
         });
 
         const response = await axios.get(
-          `http://localhost:5000/api/booking/all-booking-pagination?${queryParams}`
+          `https://cinema-backend-zeta.vercel.app/api/booking/all-booking-pagination?${queryParams}`
         );
 
         setBookings(response.data.bookings);

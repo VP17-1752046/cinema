@@ -47,13 +47,13 @@ function RevenueAndRoom() {
     totalPepsi: 0,
     totalDiscout: 0,
     totalPrice: 0,
-    totalDiscount12:0,
-    totalDiscount5:0,
-    totalDiscount10:0,
-    totalDiscount20:0,
-    totalDiscount30:0,
-    totalDiscount40:0,
-    totalDiscount50:0,
+    totalDiscount12: 0,
+    totalDiscount5: 0,
+    totalDiscount10: 0,
+    totalDiscount20: 0,
+    totalDiscount30: 0,
+    totalDiscount40: 0,
+    totalDiscount50: 0,
   });
 
   const daysToShow = 7;
@@ -119,15 +119,14 @@ function RevenueAndRoom() {
         const seat = Array.isArray(item.seat) ? item.seat : [];
         const foodNames = item.foodNames || [];
         const discount = item.discountId ? item.discountId.name : "No Discount";
-  
+
         console.log("Processing Item:", item); // In item hiện tại
         console.log("Discount Applied:", discount);
         console.log("Total Price for Item:", item.totalPrice || 0);
-  
-  
+
         const { seatN, seatV, seatC } = countSeats(seat);
         const { corn, pepsi, combo } = countfoodNames(foodNames);
-  
+
         return {
           totalSeatPrice: total.totalSeatPrice + (item.totalSeatPrice || 0),
           totalFoodPrice: total.totalFoodPrice + (item.totalFoodPrice || 0),
@@ -138,8 +137,13 @@ function RevenueAndRoom() {
           totalCombo: total.totalCombo + combo,
           totalCorn: total.totalCorn + corn,
           totalPepsi: total.totalPepsi + pepsi,
-          totalDiscount: total.totalDiscount + (item.discountId ? (item.totalPrice * 0.12) : 0), // Assuming a 12% discount for simplicity
-          totalPrice: total.totalPrice + (item.totalSeatPrice || 0) + (item.totalFoodPrice || 0),
+          totalDiscount:
+            total.totalDiscount +
+            (item.discountId ? item.totalPrice * 0.12 : 0), // Assuming a 12% discount for simplicity
+          totalPrice:
+            total.totalPrice +
+            (item.totalSeatPrice || 0) +
+            (item.totalFoodPrice || 0),
         };
       },
       {
@@ -157,7 +161,6 @@ function RevenueAndRoom() {
       }
     );
   };
-  
 
   const handleBookingUpdate = (data) => {
     let totalSeatPrice = 0;
@@ -169,15 +172,14 @@ function RevenueAndRoom() {
     let totalCombo = 0;
     let totalCorn = 0;
     let totalPepsi = 0;
-    let totalPrice = 0;;
+    let totalPrice = 0;
     let totalDiscount12 = 0;
-    let totalDiscount5 =0;
-    let totalDiscount10 =0;
-    let totalDiscount20 =0;
-    let totalDiscount30 =0;
-    let totalDiscount40 =0;
-    let totalDiscount50 =0;
-    
+    let totalDiscount5 = 0;
+    let totalDiscount10 = 0;
+    let totalDiscount20 = 0;
+    let totalDiscount30 = 0;
+    let totalDiscount40 = 0;
+    let totalDiscount50 = 0;
 
     data.forEach((booking) => {
       // Kiểm tra xem booking có dữ liệu không
@@ -188,24 +190,22 @@ function RevenueAndRoom() {
         totalPrice += booking.totalPrice;
         totalSeat += booking.seat.length;
 
-
-        if(booking.discountId.name === 'Giảm giá 12%'){
-          totalDiscount12 +=1;
-        } else if(booking.discountId.name === 'Giảm giá 5%'){
-          totalDiscount5 +=1
-        } else if(booking.discountId.name === 'Giảm giá 10%'){
-          totalDiscount10 +=1
-        } else if(booking.discountId.name === 'Giảm giá 20%'){
-          totalDiscount20 +=1
-        } else if(booking.discountId.name === 'Giảm giá 30%'){
-          totalDiscount30 +=1
-        } else if (booking.discountId.name === 'Giảm giá 40%'){
-          totalDiscount40 +=1
+        if (booking.discountId.name === "Giảm giá 12%") {
+          totalDiscount12 += 1;
+        } else if (booking.discountId.name === "Giảm giá 5%") {
+          totalDiscount5 += 1;
+        } else if (booking.discountId.name === "Giảm giá 10%") {
+          totalDiscount10 += 1;
+        } else if (booking.discountId.name === "Giảm giá 20%") {
+          totalDiscount20 += 1;
+        } else if (booking.discountId.name === "Giảm giá 30%") {
+          totalDiscount30 += 1;
+        } else if (booking.discountId.name === "Giảm giá 40%") {
+          totalDiscount40 += 1;
         } else {
-          totalDiscount50 +=1
+          totalDiscount50 += 1;
         }
 
-        
         booking.seat.forEach((seat) => {
           if (seat.typeSeat === "vip") {
             totalSeatV += 1;
@@ -244,13 +244,13 @@ function RevenueAndRoom() {
       totalCombo: prevRevenue.totalCombo + totalCombo,
       totalCorn: prevRevenue.totalCorn + totalCorn,
       totalPepsi: prevRevenue.totalPepsi + totalPepsi,
-      totalDiscount12:  totalDiscount12,
-      totalDiscount5:  totalDiscount5,
-      totalDiscount10:  totalDiscount10,
-      totalDiscount20:  totalDiscount20,
-      totalDiscount30:  totalDiscount30,
-      totalDiscount40:  totalDiscount40,
-      totalDiscount50:  totalDiscount50,
+      totalDiscount12: totalDiscount12,
+      totalDiscount5: totalDiscount5,
+      totalDiscount10: totalDiscount10,
+      totalDiscount20: totalDiscount20,
+      totalDiscount30: totalDiscount30,
+      totalDiscount40: totalDiscount40,
+      totalDiscount50: totalDiscount50,
     }));
   };
 
@@ -287,7 +287,7 @@ function RevenueAndRoom() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/cinemas")
+      .get("https://cinema-backend-zeta.vercel.app/api/cinemas")
       .then((response) => {
         const transformedData = response.data.map((cinema) => ({
           id: cinema._id,
@@ -311,7 +311,9 @@ function RevenueAndRoom() {
   useEffect(() => {
     if (selectedCinema && selectedRoomId && selectedDate) {
       axios
-        .get(`http://localhost:5000/api/showtimes/cinema/${selectedCinema}`)
+        .get(
+          `https://cinema-backend-zeta.vercel.app/api/showtimes/cinema/${selectedCinema}`
+        )
         .then((response) => {
           const showtimes = response.data;
 
@@ -344,22 +346,22 @@ function RevenueAndRoom() {
           const bookings = await Promise.all(
             showtimesData.map((showtime) =>
               axios.get(
-                `http://localhost:5000/api/booking/showtime/${showtime._id}`
+                `https://cinema-backend-zeta.vercel.app/api/booking/showtime/${showtime._id}`
               )
             )
           );
-  
+
           const allBookings = bookings.map((booking) => booking.data);
-          console.log('all',allBookings)
-  
+          console.log("all", allBookings);
+
           // Gọi hàm handleBookingUpdate để cập nhật tổng doanh thu
           const flattenedBookings = allBookings.flat(); // Chuyển từ mảng lồng nhau thành mảng phẳng
           handleBookingUpdate(flattenedBookings);
-  
+
           // Tính toán doanh thu cho từng suất chiếu
           const calculatedRevenue = showtimesData.map((showtime, index) => {
             const bookingList = allBookings[index] || [];
-  
+
             let totalSeatPrice = 0;
             let totalFoodPrice = 0;
             let totalSeat = 0;
@@ -367,19 +369,16 @@ function RevenueAndRoom() {
             let totalfoodNames = 0;
             let totalPrice = 0;
             let totalDiscount = 0;
-  
+
             bookingList.forEach((booking) => {
               totalSeatPrice += booking.totalSeatPrice;
               totalFoodPrice += booking.totalFoodPrice;
               totalSeat += booking.seat.length;
               totalPrice += booking.totalPrice;
               totalDiscount += booking.discountId ? 1 : 0;
-              totalfoodNames += booking.foodNames.length
-  
-          
-             
+              totalfoodNames += booking.foodNames.length;
             });
-  
+
             return {
               showtimeId: showtime._id,
               totalSeatPrice,
@@ -388,20 +387,20 @@ function RevenueAndRoom() {
               totalVIPSeats,
               totalfoodNames,
               totalPrice,
-              totalDiscount
+              totalDiscount,
             };
           });
-  
+
           setCalculatedRevenues(calculatedRevenue); // Lưu vào state
         } catch (error) {
           console.error("Error fetching booking data:", error);
         }
       };
-  
+
       fetchBookingData();
     }
   }, [showtimesData]);
-  
+
   useEffect(() => {
     if (selectedRoomId) {
       const roomShowtimes = showtimesData.filter(
@@ -512,7 +511,7 @@ function RevenueAndRoom() {
                             totalSeatPrice: 0,
                             totalFoodPrice: 0,
                             totalPrice: 0,
-                            totalDiscount:0
+                            totalDiscount: 0,
                           }; // Nếu không tìm thấy, đặt giá trị mặc định
 
                           return (
@@ -526,7 +525,12 @@ function RevenueAndRoom() {
                               <td>{revenue.totalDiscount}</td>
 
                               <td>
-                              <td>{revenue.totalPrice ? revenue.totalPrice.toLocaleString() : "0"} đ</td>
+                                <td>
+                                  {revenue.totalPrice
+                                    ? revenue.totalPrice.toLocaleString()
+                                    : "0"}{" "}
+                                  đ
+                                </td>
                               </td>
                             </tr>
                           );
@@ -629,12 +633,12 @@ function RevenueAndRoom() {
 
                     <h3>Vé giảm giá</h3>
                     <div className="note">
-                        <p>vé giảm 5%: {totalRevenue.totalDiscount5} /5</p>
-                        <p>vé giảm 12%: {totalRevenue.totalDiscount12}/12</p>
-                        <p>vé giảm 20%: {totalRevenue.totalDiscount20}/20</p>
-                        <p>vé giảm 30%: {totalRevenue.totalDiscount30}/30</p>
-                        <p>vé giảm 40%: {totalRevenue.totalDiscount40}/40</p>
-                        <p>vé giảm 50%: {totalRevenue.totalDiscount50}/50</p>
+                      <p>vé giảm 5%: {totalRevenue.totalDiscount5} /5</p>
+                      <p>vé giảm 12%: {totalRevenue.totalDiscount12}/12</p>
+                      <p>vé giảm 20%: {totalRevenue.totalDiscount20}/20</p>
+                      <p>vé giảm 30%: {totalRevenue.totalDiscount30}/30</p>
+                      <p>vé giảm 40%: {totalRevenue.totalDiscount40}/40</p>
+                      <p>vé giảm 50%: {totalRevenue.totalDiscount50}/50</p>
                     </div>
 
                     {/* Đường phân cách */}

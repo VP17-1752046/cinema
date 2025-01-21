@@ -31,7 +31,7 @@ function DetailMovie() {
     const fetchMovieDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/movies/${id}`
+          `https://cinema-backend-zeta.vercel.app/api/movies/${id}`
         ); // Gọi API lấy thông tin phim
         setMovieDetails(response.data); // Lưu thông tin phim vào state
       } catch (error) {
@@ -45,17 +45,18 @@ function DetailMovie() {
   useEffect(() => {
     const fetchShowtimes = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/showtimes/movie/${id}`);
+        const response = await axios.get(
+          `https://cinema-backend-zeta.vercel.app/api/showtimes/movie/${id}`
+        );
         const filteredShowtimes = groupByCinema(response.data); // Chỉ lấy suất chiếu hôm nay
         setShowtimes(filteredShowtimes);
       } catch (error) {
-        console.error('Error fetching showtimes:', error);
+        console.error("Error fetching showtimes:", error);
       }
     };
 
     fetchShowtimes();
   }, [id]);
-
 
   const groupByCinema = (data) => {
     // Lấy ngày hôm nay theo định dạng YYYY-MM-DD
@@ -73,7 +74,6 @@ function DetailMovie() {
       return acc;
     }, {});
   };
-
 
   if (!movieDetails) return <p>Loading...</p>;
 
@@ -235,7 +235,7 @@ function DetailMovie() {
                       d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"
                     />
                   </svg>
-                  {movieDetails.showDate.split('T')[0]}
+                  {movieDetails.showDate.split("T")[0]}
                 </span>
               </p>
               <p className="flex gap-2 items-center">
@@ -274,7 +274,6 @@ function DetailMovie() {
                     {genre}
                   </span>
                 ))}
-
               </p>
               <p className="text-gray-500 text-sm">
                 Đạo diễn:{" "}
@@ -283,11 +282,12 @@ function DetailMovie() {
                 </span>
               </p>
               <p className="text-gray-500 text-sm">
-                Diễn viên:{" "} {movieDetails.cast.map((cast) => (
+                Diễn viên:{" "}
+                {movieDetails.cast.map((cast) => (
                   <span className="text-black border rounded-md m-1 p-1  hover:border-orange-500">
                     {cast}
-                  </span>))}
-
+                  </span>
+                ))}
               </p>
             </div>
           </div>
@@ -325,10 +325,11 @@ function DetailMovie() {
                     <div
                       key={day.fullDate}
                       onClick={() => setSelectedDate(day.fullDate)}
-                      className={`text-gray-700 text-base cursor-pointer text-center p-2 rounded transition-colors ${selectedDate === day.fullDate
-                        ? "bg-blue-500 text-white"
-                        : "hover:bg-gray-100"
-                        }`}
+                      className={`text-gray-700 text-base cursor-pointer text-center p-2 rounded transition-colors ${
+                        selectedDate === day.fullDate
+                          ? "bg-blue-500 text-white"
+                          : "hover:bg-gray-100"
+                      }`}
                     >
                       <div className="">{day.day}</div>
                       <div className="">{day.date}</div>
@@ -364,10 +365,15 @@ function DetailMovie() {
           </div>
           <div className="w-[100%] py-3 flex-row   ">
             {Object.keys(showtimes).map((cinemaName) => (
-              <div key={cinemaName} className=" py-9 flex-row space-y-5 border-b-[1px]">
+              <div
+                key={cinemaName}
+                className=" py-9 flex-row space-y-5 border-b-[1px]"
+              >
                 <p className="font-bold text-lg text-gray-800">{cinemaName}</p>
                 <div className="flex items-center gap-4 max-w-[100%] ">
-                  <p className="text-gray-700 font-medium w-fit mr-8 text-nowrap">Suất Chiếu</p>
+                  <p className="text-gray-700 font-medium w-fit mr-8 text-nowrap">
+                    Suất Chiếu
+                  </p>
                   <div></div>
                   <div className=" space-y-2 ">
                     {showtimes[cinemaName].map((showtime) => (
@@ -380,13 +386,10 @@ function DetailMovie() {
                       </button>
                     ))}
                   </div>
-
                 </div>
               </div>
             ))}
           </div>
-
-
         </div>
       </div>
       <Footer />

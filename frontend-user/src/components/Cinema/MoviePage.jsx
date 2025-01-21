@@ -20,7 +20,7 @@ const MoviePage = ({ cinemaLocation }) => {
       setError("");
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/showtimes/location/${cinemaLocation}`
+          `https://cinema-backend-zeta.vercel.app/api/showtimes/location/${cinemaLocation}`
         );
         console.log("Showtimes API Data:", response.data); // Kiểm tra dữ liệu
         setShowtimes(response.data);
@@ -139,9 +139,7 @@ const MoviePage = ({ cinemaLocation }) => {
           Không có suất chiếu nào cho ngày {selectedDate}.
         </p>
       ) : (
-        <MovieList
-          groupedShowtimes={groupedShowtimes}
-        />
+        <MovieList groupedShowtimes={groupedShowtimes} />
       )}
     </div>
   );

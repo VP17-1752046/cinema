@@ -30,7 +30,9 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/users/");
+        const response = await axios.get(
+          "https://cinema-backend-zeta.vercel.app/api/users/"
+        );
         setUsers(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -125,7 +127,7 @@ const Users = () => {
     try {
       // Gọi API DELETE để xóa phim
       await axios.delete(
-        `http://localhost:5000/api/users/delete-admin/${selectedUser._id}`
+        `https://cinema-backend-zeta.vercel.app/api/users/delete-admin/${selectedUser._id}`
       );
       // Cập nhật danh sách phim trong state
       setUsers((prevUsers) =>
