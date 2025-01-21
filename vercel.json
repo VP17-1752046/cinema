@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": "/frontend-admin/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/frontend-user/$1"
+    }
+  ]
+}
