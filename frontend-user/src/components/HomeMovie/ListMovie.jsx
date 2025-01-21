@@ -24,7 +24,7 @@ function ListMovie() {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          "https://cinema-backend-zeta.vercel.app/movies/released"
+          "https://cinema-backend-zeta.vercel.app/api/movies/released"
         ); // URL API của bạn
         setShowingM(response.data); // Lưu danh sách phim vào state
       } catch (error) {
@@ -39,7 +39,7 @@ function ListMovie() {
     const fetchMovies0 = async () => {
       try {
         const response = await axios.get(
-          "https://cinema-backend-zeta.vercel.app/movies/not_released"
+          "https://cinema-backend-zeta.vercel.app/api/movies/not_released"
         ); // URL API của bạn
         setUpComingM(response.data); // Lưu danh sách phim vào state
       } catch (error) {
