@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from "./Routes/UserRouter.js";
@@ -21,17 +21,20 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // Hoặc specify domain cụ thể của frontend
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // connect DB
 connect();
 
-app.get("/", (req, res) => {
-  res.send("API is running ...");
-});
-
+// Routes
 app.use("/api/users", userRouter);
 app.use("/api/movies", userMovie);
 app.use("/api/cinemas", userCinema);
@@ -39,14 +42,25 @@ app.use("/api/movie", movieRouter);
 app.use("/api/showtimes", showtimeRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/booking", bookingRouter);
-
 app.use("/api/momo", paymentRouter);
-// error handler
-app.use(errorHandler);
+
+// Serve static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running in http://localhost/${PORT}`);
+// Base route
+app.get("/", (req, res) => {
+  res.send("API is running ...");
 });
+
+// Error handler
+app.use(errorHandler);
+
+// Only run app.listen in development
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running in http://localhost:${PORT}`);
+  });
+}
+
+export default app;
