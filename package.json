@@ -1,8 +1,11 @@
 {
+  "name": "cinema",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "build": "npm run build:backend && npm run build:admin && npm run build:user",
-    "build:backend": "cd backend && npm install && npm run build",
-    "build:admin": "cd frontend-admin && npm install && npm run build",
-    "build:user": "cd frontend-user && npm install && npm run build"
+    "build": "npm run build-backend && npm run build-admin && npm run build-user",
+    "build-backend": "cd backend && npm install && npm run build",
+    "build-admin": "cd frontend-admin && npm install && npm run build",
+    "build-user": "cd frontend-user && npm install && npm run build"
   }
 }

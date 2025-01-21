@@ -1,16 +1,31 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "src": "backend/server.js",
+      "use": "@vercel/node"
     },
     {
-      "source": "/admin/(.*)",
-      "destination": "/frontend-admin/$1"
+      "src": "frontend-admin/package.json",
+      "use": "@vercel/static-build"
     },
     {
-      "source": "/(.*)",
-      "destination": "/frontend-user/$1"
+      "src": "frontend-user/package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "frontend-admin/build/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend-user/build/$1"
     }
   ]
 }
